@@ -38,7 +38,7 @@ class PaymentController extends Controller
         }
 
 
-      $pay = $payments->get();
+      $pay = $payments->paginate(7);
             return view('pages.payments/index')->with('payments',$pay);
 
     }

@@ -57,7 +57,8 @@
              </div>
              @endif
             </td>
-            <td class="px-4 py-3"><a href="customers/edit/{{$customer->id}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border-blue-700 rounded">Edytuj</a></td>
+            <td class="px-4 py-3"><a href="customers/edit/{{$customer->id}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border-blue-700 rounded">Edytuj</a>
+            <a href="customers/payments/{{$customer->id}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border-blue-700 rounded">Przelewy</a></td>
         </tr>
 
       @endforeach

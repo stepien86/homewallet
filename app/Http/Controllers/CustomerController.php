@@ -123,4 +123,21 @@ class CustomerController extends Controller
     {
         //
     }
+    public function customerPayments($id){
+        $customer = Customer::find($id);
+            foreach ($customer->obligations as $pay) {
+                $t[] = $pay->payments;
+                return $t;
+                foreach ($pay->payments as $payment){
+                    // $j = count($pay->payments);
+                    // for($i=0; $i<$j; $i++){
+                    //     $t['amount'][$i] = $payment->amount;
+                    //     $d['date'][$i] = $payment->date;
+                    // }
+
+            }
+        }
+
+
+    }
 }

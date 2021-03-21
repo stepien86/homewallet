@@ -126,8 +126,10 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $total }}</td>
                             </tr>
                         </thead>
-
                     </table>
+                </div>
+                <div class="mt-2 mb-2 px-2">
+                    {{$payments->links()}}
                 </div>
             </div>
         </div>

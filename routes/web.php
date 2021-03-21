@@ -45,6 +45,7 @@ Route::get('customers/create', [CustomerController::class,'create'])->name('cust
 Route::post('customers/create/store', [CustomerController::class,'store'])->name('customers-store');
 Route::get('customers/edit/{id}', [CustomerController::class,'edit']);
 Route::post('customers/update/{id}', [CustomerController::class,'update'])->name('customers-update');
+Route::get('customers/payments/{id}', [CustomerController::class,'customerPayments'])->name('customers-payments');
 
 Route::get('payments', [PaymentController::class,'index'])->name('payments');
 Route::get('new-payment', [PaymentController::class,'create'])->name('new-payment');
