@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Customer;
+use App\Models\Obligation;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -123,20 +125,47 @@ class CustomerController extends Controller
     {
         //
     }
-    public function customerPayments($id){
-        $customer = Customer::find($id);
-            foreach ($customer->obligations as $pay) {
-                $t[] = $pay->payments;
-                return $t;
-                foreach ($pay->payments as $payment){
-                    // $j = count($pay->payments);
-                    // for($i=0; $i<$j; $i++){
-                    //     $t['amount'][$i] = $payment->amount;
-                    //     $d['date'][$i] = $payment->date;
-                    // }
+    public function customerPayments(Request $request, $id){
 
-            }
+      // $obligations = Customer::find($id)->obligations()->with('payments')->get();
+       $obligations = Obligation::where('customer_id', $id)->with('payments')->get();
+
+
+      if ($request->has('date-from') and $request->filled('date-to') == null ) {
+            $dataFrom= $request->input('date-from');
+            $set = Carbon::now();
+            $now = $set->toDateString();
+            $obligations = Obligation::where('customer_id', $id)
+          ->with(['payments' => function ($query) use ($dataFrom, $now){
+              $query->whereBetween('date', [$dataFrom,$now]);
+          }])->get();
         }
+
+        elseif ($request->has('date-to') and $request->filled('date-null') == null ) {
+
+            $dataFrom= '1900-01-01';
+            $dataTo= $request->input('date-to');
+
+            $obligations = Obligation::where('customer_id', $id)
+          ->with(['payments' => function ($query) use ($dataFrom,  $dataTo){
+              $query->whereBetween('date', [$dataFrom,$dataTo]);
+          }])->get();
+        }
+        elseif($request->filled('date-from', 'date-to')){
+
+            $dataFrom= $request->input('date-from');
+            $dataTo= $request->input('date-to');
+
+            $obligations = Obligation::where('customer_id', $id)
+            ->with(['payments' => function ($query) use ($dataFrom, $dataTo){
+                $query->whereBetween('date', [$dataFrom,$dataTo]);
+            }])->get();
+        }
+
+       return view('pages.customers.payments-customer')
+                       ->with('obligationsPayments', $obligations)
+                       ->with('id', $id);
+
 
 
     }

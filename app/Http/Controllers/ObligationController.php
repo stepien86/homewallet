@@ -32,6 +32,11 @@ class ObligationController extends Controller
                     ->with('customer','payments');
             }
         }
+        elseif ($request->has('customer')){
+            $obligations = Obligation::where('customer_id',$request->input('customer'))
+
+                    ->with('customer','payments');
+        }
         else {
             $obligations= Obligation::where('status',1)->with('customer');
         }
@@ -115,8 +120,8 @@ class ObligationController extends Controller
     public function show(Obligation $obligation, $id)
     {
         $obligation = Obligation::find($id);
-        $customer = $obligation->customer;
-        $payments = $obligation->payments;
+            $customer = $obligation->customer;
+            $payments = $obligation->payments;
 
 
         return view('pages.obligations.show')

@@ -31,11 +31,7 @@ Route::get('/', function () {
    // return $payment;
    $customer = Customer::find(1);
  //  return $customer->obligations;
-   foreach ($customer->obligations as $p) {
-       foreach ($p->payments as $moneta){
-          echo $moneta->amount;
-       }
-   }
+
 
     return view('pages.index');
 });
