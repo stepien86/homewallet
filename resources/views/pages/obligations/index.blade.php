@@ -141,17 +141,22 @@
                         @endphp
                       @endforeach
                   </td>
+                  {{$paymentSum}}
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     @if ($paymentSum == 0)
+
                         {{$paymentSum}}<a href="{{route('obligations-edit', $obligation->id) }}" class="text-indigo-600 hover:text-indigo-900"> Edytuj</a>
                         <a href="{{route('pay-obligation', ['obligation' => $obligation->id, 'amount' => $obligation->total_amount])}}" class="text-indigo-600 hover:text-indigo-900">Opłać</a>
 
                     @elseif ($paymentSum < $obligation->total_amount)
-                    {{$paymentSum}}<a href="{{route('pay-obligation', ['obligation' => $obligation->id, 'amount' => $obligation->total_amount-$paymentSum])}}" class="text-indigo-600 hover:text-indigo-900">Opłać resztę</a>
+                        {{$paymentSum}}<a href="{{route('pay-obligation', ['obligation' => $obligation->id, 'amount' => $obligation->total_amount-$paymentSum])}}" class="text-indigo-600 hover:text-indigo-900">Opłać resztę</a>
                         <a href="{{route('obligations.show', $obligation->id)}}" class="text-indigo-600 hover:text-indigo-900">szczegóły</a>
-                    @else ($sum == $obligation->total_amount)
+
+                        @else ($sum == $obligation->total_amount)
+
                         <a href="{{route('obligations.show', $obligation->id)}}" class="text-indigo-600 hover:text-indigo-900">szczegóły</a>
                     @endif
+
                     @php
                         $total += $obligation->total_amount;
                     @endphp

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Payment;
 use App\Models\Customer;
 use App\Models\Obligation;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 class CustomerController extends Controller
 {
@@ -127,11 +129,15 @@ class CustomerController extends Controller
     }
     public function customerPayments(Request $request, $id){
 
-      // $obligations = Customer::find($id)->obligations()->with('payments')->get();
-       $obligations = Obligation::where('customer_id', $id)->with('payments')->get();
+     $obligations = Customer::find($id)->obligations()->with('payments')->get();
+    //  $obligations = Obligation::where('customer_id', $id)->with('payments')->paginate(1);
+
+        // $obligations = Payment::whereHas('obligation', function (Builder $query) use ($id) {
+        //     $query->where('customer_id', $id);
+        // })->paginate(2);
 
 
-      if ($request->has('date-from') and $request->filled('date-to') == null ) {
+     if ($request->has('date-from') and $request->filled('date-to') == null ) {
             $dataFrom= $request->input('date-from');
             $set = Carbon::now();
             $now = $set->toDateString();

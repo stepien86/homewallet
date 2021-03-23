@@ -61,28 +61,43 @@ class ObligationController extends Controller
         $startDate = Carbon::now();
         $firstDay = $startDate->firstOfMonth();
 
-        $customers = Customer::where('is_active', '1')->where('reminder', '1')->pluck('id');
 
-         foreach ($customers as $item)
-         {
-          $c[$item] = Customer::find($item);
-           $t[$item]= $c[$item]->obligations()->where('payment_peroid', $firstDay)->first();
-           if ($t[$item] == null) {
-            //    echo $c[$item]. 'dupa <br>';
-            //    echo $c[$item]['id'];
-               $obligation = new Obligation;
-               $obligation->customer_id=$c[$item]['id'];
-               $obligation->payment_peroid=$firstDay;
-               $obligation->total_amount=$c[$item]['default_amount'];
-               $obligation->title=$c[$item]['title'];
-               $obligation->status='1';
-               $obligation->save();
-           }
-           else {
-              echo $t[$item]. 'ok <br>';
-           }
+        $customers = Customer::wheredoesntHave('obligations', function($q) use ($firstDay){
+            $q->where('payment_peroid', $firstDay);
+        })->where('is_active', '1')->where('reminder', '1')->get();
+            foreach ($customers as $customer)
+            {
+                $obligation = new Obligation;
+                $obligation->customer_id=$customer->id;
+                $obligation->payment_peroid=$firstDay;
+                $obligation->total_amount=$customer->default_amount;
+                $obligation->title=$customer->title;
+                $obligation->status='1';
+                $obligation->save();
+            }
 
-         }
+            //$customers = Customer::where('is_active', '1')->where('reminder', '1')->pluck('id');
+    //    return $customers;
+
+        // foreach ($customers as $item)
+        //  {
+        //   $c[$item] = Customer::find($item);
+        //    $t[$item]= $c[$item]->obligations()->where('payment_peroid', $firstDay)->first();
+        //    if ($t[$item] == null) {
+
+        //        $obligation = new Obligation;
+        //        $obligation->customer_id=$c[$item]['id'];
+        //        $obligation->payment_peroid=$firstDay;
+        //        $obligation->total_amount=$c[$item]['default_amount'];
+        //        $obligation->title=$c[$item]['title'];
+        //        $obligation->status='1';
+        //        $obligation->save();
+        //    }
+        //    else {
+        //       echo $t[$item]. 'ok <br>';
+        //    }
+
+        //  }
         return redirect()->route('obligations-index');
     }
 

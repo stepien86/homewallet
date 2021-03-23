@@ -19,7 +19,8 @@ class PaymentController extends Controller
     public function index(Request $request)
 
     {
-        $payments = Payment::orderBy('id','desc')->with('category','type');
+        $payments = Payment::orderBy('id','desc')->with('category','type','obligation');
+
 
         if($request->filled('date-from'))
         {
@@ -39,6 +40,7 @@ class PaymentController extends Controller
 
 
       $pay = $payments->paginate(7);
+   //   dd($pay);
             return view('pages.payments/index')->with('payments',$pay);
 
     }
@@ -74,14 +76,16 @@ class PaymentController extends Controller
             $payment->date=$request->input('payment-date');
             $payment->category_id=$request->input('payment-category');
             $payment->type_id=$request->input('payment-type');
-            $payment->save();
+           // $payment->save();
 
         $obligationId=$request->input('obligation-id');
         if($obligationId > 0) {
-            $payment->obligations()->sync([$obligationId]);
-            $obligation= Obligation::find($obligationId);
+
+            $payment->obligation_id= $obligationId;
+            $payment->save();
+              $obligation= Obligation::find($obligationId);
                 //*** Jeżeli kwota wpłaty jest taka sama jak zobowiązaniw zaktualizuj status */
-                if ($obligation->total_amount == $request->input('amount')) {
+                if ($obligation->total_amount <=$request->input('amount')) {
                     $obligation->status='2';
                     $obligation->save();
                 }
@@ -101,6 +105,10 @@ class PaymentController extends Controller
                         $obligation->save();
                     }
                 }
+        }
+        else {
+            $payment->obligation_id = '0';
+            $payment->save();
         }
         return redirect('payments')->with('status', 'Zarejestrowano płatność!');
 
@@ -149,17 +157,19 @@ class PaymentController extends Controller
     public function destroy(Payment $payment, $id)
     {
         $payment= Payment::findOrfail($id);
-            foreach ($payment->obligations as $obligation)
-            {
-                $obligation->id;
-            }
-       $obligation = Obligation::find($obligation->id);
-       $obligation->status='1';
-       $obligation->save();
+            $obid =  $payment->obligation_id;
+            if($obid > 0) {
 
-     $payment->delete();
+                $obligation = Obligation::find($obid);
+                $obligation->status='1';
+                $obligation->save();
+                $payment->delete();
+            }
+            $payment->delete();
+
      return redirect('payments')->with('status', 'Przelew usunięto!');
     }
+
 
     public function PayO(Request $request)
     {

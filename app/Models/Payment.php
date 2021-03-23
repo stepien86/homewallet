@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
-    protected $fillable = ['date','amount', 'type','category_id'];
+    protected $fillable = ['date','amount', 'obligation_id', 'type','category_id'];
 
 
-    public function obligations(){
-        return $this->belongsToMany(Obligation::class, table:'obligation_payments')->withTimestamps();
+    public function obligation(){
+        return $this->belongsTo(Obligation::class);
     }
 
     public function category(){

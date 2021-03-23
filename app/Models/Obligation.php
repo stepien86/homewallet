@@ -12,7 +12,7 @@ class Obligation extends Model
     protected $fillable = ['customer_id','payment_peroid','total_amount'];
 
     public function payments(){
-        return $this->belongsToMany(Payment::class, table:'obligation_payments')->withTimestamps();
+        return $this->hasMany(Payment::class);
     }
     public function customer(){
         return $this->belongsTo(Customer::class);

@@ -17,6 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->date('date');
             $table->float('amount');
+            $table->integer('obligation_id');
             $table->integer('type_id');
             $table->integer('category_id');
             $table->timestamps();
