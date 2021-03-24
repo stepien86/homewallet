@@ -78,7 +78,7 @@
                   Status
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Data zobowiązania
+                  Okres zobowiązania
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Kwota
@@ -94,9 +94,13 @@
             <tbody class="bg-white divide-y divide-gray-200">
                 @php
                     $total = 0;
-                    $paymentSum = 0;
+                    $totalPayment = 0;
                 @endphp
                 @foreach ($obligations as $obligation)
+
+                @php
+                      $paymentSum = 0;
+                @endphp
                 <tr>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
@@ -138,6 +142,8 @@
                       {{$payment->date}};
                         @php
                               $paymentSum += $payment->amount;
+                              $totalPayment += $payment->amount;
+
                         @endphp
                       @endforeach
                   </td>
@@ -152,7 +158,13 @@
                         {{$paymentSum}}<a href="{{route('pay-obligation', ['obligation' => $obligation->id, 'amount' => $obligation->total_amount-$paymentSum])}}" class="text-indigo-600 hover:text-indigo-900">Opłać resztę</a>
                         <a href="{{route('obligations.show', $obligation->id)}}" class="text-indigo-600 hover:text-indigo-900">szczegóły</a>
 
-                        @else ($sum == $obligation->total_amount)
+                    @elseif ($paymentSum > $obligation->total_amount)
+                      <div class="p-2">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                          NADPŁATA</div>
+                      <div><a href="{{route('obligations.show', $obligation->id)}}" class="text-indigo-600 hover:text-indigo-900">szczegóły</a></div>
+
+                    @else ($sum == $obligation->total_amount)
 
                         <a href="{{route('obligations.show', $obligation->id)}}" class="text-indigo-600 hover:text-indigo-900">szczegóły</a>
                     @endif
@@ -171,13 +183,13 @@
 
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Wpłacono:
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{$total}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{$totalPayment}}</td>
                 </tr>
                 @else
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Pozostało do zapłaty:
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{$total-$paymentSum}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{$total-$totalPayment}}</td>
                 </tr>
                 @endif
             </th>

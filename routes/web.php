@@ -3,6 +3,7 @@
 use App\Models\Payment;
 use App\Models\Customer;
 use App\Models\Obligation;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CustomerController;
@@ -21,16 +22,10 @@ use App\Http\Controllers\ObligationController;
 
 Route::get('/', function () {
 
-  //  $obligation = \App\Models\Obligation::find(1);
- //   $obligation->payments()->sync([2]);
-   // $payment = \App\Models\Payment::find(1);
+    // $nowTimeDate = new Carbon('2016-01-23');
+    // $t = $nowTimeDate->addMonth();
+    // dd($t);
 
-
-  // $payment->obligations;
-
-   // return $payment;
-   $customer = Customer::find(1);
- //  return $customer->obligations;
 
 
     return view('pages.index');

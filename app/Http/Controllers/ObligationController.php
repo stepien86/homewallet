@@ -42,7 +42,9 @@ class ObligationController extends Controller
         }
             $obligations = $obligations->orderBy('id', 'desc')->get();
 
+
         return view('pages.obligations/index', compact('obligations'), compact('customers'));
+
     }
 
     /**
