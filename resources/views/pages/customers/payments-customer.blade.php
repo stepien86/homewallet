@@ -19,7 +19,7 @@
         @endif
         <div class="pb-4">
             <div>
-                <form action="{{route('customers-payments', $id)}}" method="get">
+                <form action="{{ route('customers-payments', $id) }}" method="get">
                     <input type="date" name="date-from" id="">
                     <input type="date" name="date-to" id="">
                     <button type="submit"
@@ -65,49 +65,49 @@
                             </tr>
                         </thead>
                         @php
-                             $total = 0;
+                            $total = 0;
                         @endphp
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($obligationsPayments as $obligation)
 
-                               @foreach ($obligation->payments as $payment)
+                                @foreach ($obligation->payments as $payment)
                                     @php
                                         $total += $payment->amount;
                                     @endphp
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $payment->id }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $payment->id }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
 
                                                 <div class="ml-4">
                                                     <div class="text-sm font-medium text-gray-900">
-                                                        {{$obligation->customer->name}}
+                                                        {{ $obligation->customer->name }}
                                                     </div>
                                                     <div class="text-sm text-gray-500">
 
                                                     </div>
                                                 </div>
 
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $payment->amount }}</div>
-                                        {{-- <div class="text-sm text-gray-500">Optimization</div> --}}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $payment->category->name }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $payment->type->name }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $payment->date }}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">{{ $payment->amount }}</div>
+                                            {{-- <div class="text-sm text-gray-500">Optimization</div> --}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $payment->category->name }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $payment->type->name }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $payment->date }}
 
-                                    </td>
+                                        </td>
 
-                                </tr>
+                                    </tr>
                                 @endforeach
                             @endforeach
                             <!-- More items... -->
@@ -118,7 +118,7 @@
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Suma:
                                 </th>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{$total}}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $total }}</td>
                             </tr>
                         </thead>
                     </table>

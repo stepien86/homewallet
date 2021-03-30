@@ -31,11 +31,12 @@ Route::get('/', function () {
     return view('pages.index');
 });
 
-Route::get('customers', [CustomerController::class,'index'])->name('customers');
-Route::get('customers/create', [CustomerController::class,'create'])->name('customers-create');
-Route::post('customers/create/store', [CustomerController::class,'store'])->name('customers-store');
-Route::get('customers/edit/{id}', [CustomerController::class,'edit']);
-Route::post('customers/update/{id}', [CustomerController::class,'update'])->name('customers-update');
+// Route::get('customers', [CustomerController::class,'index'])->name('customers');
+// Route::get('customers/create', [CustomerController::class,'create'])->name('customers-create');
+// Route::post('customers', [CustomerController::class,'store'])->name('customers-store');
+// Route::get('customers/{customer}/edit', [CustomerController::class,'edit'])->name('customers.edit');
+// Route::put('customers/{id}', [CustomerController::class,'update'])->name('customers.update');
+Route::resource('customers', CustomerController::class);
 Route::get('customers/payments/{id}', [CustomerController::class,'customerPayments'])->name('customers-payments');
 
 Route::get('payments', [PaymentController::class,'index'])->name('payments');

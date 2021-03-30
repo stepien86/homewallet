@@ -62,7 +62,7 @@ class CustomerController extends Controller
                 $newCustomer->reminder = '0';
             }
             $newCustomer->save();
-                return redirect()->route('customers')->with('status', 'Dodano poprawnie!');
+                return redirect()->route('customers.index')->with('status', 'Dodano poprawnie!');
     }
 
     /**
@@ -73,7 +73,13 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        // $id = $customer->id;
+        // $obligation = Obligation::whereHas('customer', function (Builder $query) use ($id) {
+        //     $query->where('customer_id', $id);
+        // })->get();
+        $obligation = $customer->obligations->count();
+
+        return view('pages.customers.show', compact('customer', 'obligation'));
     }
 
     /**
@@ -82,9 +88,9 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer, $id)
+    public function edit(Customer $customer)
     {
-        $customer= Customer::find($id);
+        $customer= Customer::find($customer->id);
 
         return view('pages.customers.edit', compact('customer'));
     }
@@ -96,24 +102,38 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer, $id)
+    public function update(Request $request, Customer $customer)
     {
-        $customer = Customer::find($id);
-        $customer->name= $request->input('name');
-        $customer->title = $request->input('title');
-        $customer->account= $request->input('account');
+
+       // $customer = Customer::findOrFail($customer->id);
+
+        // $customer->name= $request->input('name');
+        // $customer->title = $request->input('title');
+        // $customer->account= $request->input('account');
+        $customer->update([
+            'name' => $request->input('name'),
+            'title' => $request->input('title'),
+            'account' => $request->input('account'),
+            'default_amount' => $request->input('default-amount'),
+
+        ]);
         if($request->has('isActive')){
-            $customer->is_active = '1';
+            $customer->update(['is_active' => '1' ]);
+          //  $customer->is_active = '1';
         }else{
-            $customer->is_active = '0';
+            $customer->update(['is_active' => '0' ]);
+          //  $customer->is_active = '0';
+
         }
         if($request->has('reminder')){
-            $customer->reminder = '1';
+            $customer->update(['reminder' => '1' ]);
+            // $customer->reminder = '1';
         }else{
-            $customer->reminder = '0';
+            $customer->update(['reminder' => '0' ]);
         }
-        $customer->save();
-            return redirect()->route('customers');
+      //  dd ($customer);
+       // $customer->save();
+            return redirect()->route('customers.index');
 
     }
 
@@ -125,7 +145,8 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return redirect()->route('customers.index');
     }
     public function customerPayments(Request $request, $id){
 

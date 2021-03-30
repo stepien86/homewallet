@@ -14,7 +14,7 @@
         <th class="px-4 py-3">aktywnosc</th>
         <th class="px-4 py-3">akcja</th>
       </tr>
-        <form action="{{route('customers-store')}}" method="post">
+        <form action="{{route('customers.store')}}" method="post">
             @csrf
         <tr class="border-b border-gray-200">
             <td class="px-4 py-3"><input type="text" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Nazwa" id="" value="{{old('name')}}">

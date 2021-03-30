@@ -10,16 +10,19 @@
         <th class="px-4 py-3">Nazwa</th>
         <th class="px-4 py-3">Tytuł</th>
         <th class="px-4 py-3">Konto</th>
+        <th class="px-4 py-3">Domyślna kwota</th>
         <th class="px-4 py-3">Przypomnnienie</th>
         <th class="px-4 py-3">Aktywnosc</th>
         <th class="px-4 py-3">akcja</th>
       </tr>
-        <form action="{{route('customers-update', $customer->id)}}" method="post">
+        <form action="{{route('customers.update', $customer)}}" method="post">
+            @method('PUT')
             @csrf
         <tr class="border-b border-gray-200">
             <td class="px-4 py-3"><input type="text" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" id="" value="{{$customer->name}}"></td>
             <td class="px-4 py-3"><input type="text" name="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" id="" value="{{$customer->title}}"></td>
             <td class="px-4 py-3"><input type="text" name="account" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" id="" value="{{$customer->account}}"></td>
+            <td class="px-4 py-3"><input type="text" name="default-amount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" id="" value="{{$customer->default_amount}}"></td>
             <td class="px-4 py-3">
                 <div>
                     <label class="inline-flex items-center">

@@ -9,7 +9,7 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','name','account','is_active'];
+    protected $fillable = ['title','name','account','is_active', 'reminder', 'default_amount'];
 
     public function obligations(){
         return $this->hasMany(Obligation::class);

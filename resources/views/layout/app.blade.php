@@ -8,25 +8,11 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }} ">
 </head>
 <body class="bg-gray-100">
-    <nav class="p-6 flex justify-between bg-white">
-        <ul class="flex items-center">
-            <li><a class="p-3" href="/">Home</a></li>
-            <li><a class="p-3" href="{{route('customers')}}">Odbiorcy</a></li>
-            <li><a class="p-3" href="{{route('payments')}}">Przelewy</a>
-            <ul class="mt-2">
-                <li><a class="p-3" href="{{route('new-payment')}}">Nowy przelew</a></li>
-            </ul>
-            </li>
-            <li><a class="p-3" href="{{route('obligations-index')}}">Płatności</a></li>
-            <li><a class="p-3" href="#">Statistic</a></li>
-        </ul>
-        <ul class="flex items-center">
-            <li><a class="p-3" href="#">Łukasz</a></li>
-            <li><a class="p-3" href="#">Login</a></li>
-            <li><a class="p-3" href="#">Register</a></li>
-            <li><a class="p-3" href="#">Logout</a></li>
-        </ul>
-    </nav>
-    @yield('content')
+
+        @include('layout.nav')
+
+    <div class="container mx-auto">
+        @yield('content')
+    </div>
 </body>
 </html>

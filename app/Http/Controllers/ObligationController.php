@@ -100,7 +100,7 @@ class ObligationController extends Controller
         //    }
 
         //  }
-        return redirect()->route('obligations-index');
+        return redirect()->route('obligations.index');
     }
 
     /**

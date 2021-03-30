@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-    <h1>Nowy Przelew</h1>
+
     <div class="container lg mx-auto">
         @if (session('status'))
             <div class="bg-green-300 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
@@ -18,10 +18,10 @@
             </div>
         @endif
         <div class="pb-4">
-            <div>
+            <div class="px-3 py-3">
                 <form action="{{ route('payments') }}" method="get">
-                    <input type="date" name="date-from" id="">
-                    <input type="date" name="date-to" id="">
+                    <input class="appearance-none bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="date" name="date-from" id="">
+                    <input class="appearance-none bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="date" name="date-to" id="">
                     <button type="submit"
                         class="w-28 px-3 py-3 bg-blue-500 hover:bg-blue-700 text-white rounded">Sortuj</button>
                 </form>
@@ -112,7 +112,7 @@
                                         <form action="{{ route('destroy-payment', $payment->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit">usuń</button>
+                                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-red-700 rounded" type="submit">usuń</button>
                                         </form>
                                         {{-- <a href="" class="text-indigo-600 hover:text-indigo-900">Usuń</a> --}}
 
