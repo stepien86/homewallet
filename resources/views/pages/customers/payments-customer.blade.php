@@ -20,8 +20,8 @@
         <div class="pb-4">
             <div>
                 <form action="{{ route('customers-payments', $id) }}" method="get">
-                    <input type="date" name="date-from" id="">
-                    <input type="date" name="date-to" id="">
+                    <input class="appearance-none bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="date" name="date-from" id="">
+                    <input class="appearance-none bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="date" name="date-to" id="">
                     <button type="submit"
                         class="w-28 px-3 py-3 bg-blue-500 hover:bg-blue-700 text-white rounded">Sortuj</button>
                 </form>
@@ -33,6 +33,7 @@
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    <h2>Przelewy do zobowiązań</h2>
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>

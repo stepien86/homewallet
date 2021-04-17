@@ -51,5 +51,6 @@ Route::post('obligations/create/store',[ObligationController::class, 'store'])->
 Route::get('obligations/edit/{id}', [ObligationController::class, 'edit'])->name('obligations-edit');
 Route::post('obligations/update/{id}', [ObligationController::class, 'update'])->name('obligations-update');
 Route::get('obligations/show/{id}', [ObligationController::class, 'show'])->name('obligations.show');
+Route::delete('obligations/{obligation}', [ObligationController::class, 'destroy'])->name('obligations.destroy');
 
 Route::get('PayObligations',[PaymentController::class,'PayO'])->name('pay-obligation');

@@ -20,7 +20,7 @@ class PaymentController extends Controller
 
     {
         $payments = Payment::orderBy('id','desc')->with('category','type','obligation');
-
+        $pay = $payments->paginate(3);
 
         if($request->filled('date-from'))
         {
@@ -29,6 +29,7 @@ class PaymentController extends Controller
             $now = $set->toDateString();
            // dd($now);
             $payments->whereBetween('date',[$dataFrom, $now]);
+            $pay = $payments->paginate(0);
         }
 
         if($request->filled('date-to'))
@@ -36,10 +37,9 @@ class PaymentController extends Controller
             $dataFrom= $request->input('date-from');
             $dataTo= $request->input('date-to');
             $payments->whereBetween('date',[$dataFrom, $dataTo]);
+            $pay = $payments->paginate(0);
         }
-
-
-      $pay = $payments->paginate(7);
+   //  $pay = $payments->get();
    //   dd($pay);
             return view('pages.payments/index')->with('payments',$pay);
 
@@ -70,9 +70,15 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'amount' => 'required',
+            'payment-date' => 'required',
+            'title' => 'required'
 
+        ]);
         $payment = New Payment;
-            $payment->amount=$request->input('amount');
+            $payment->amount=str_replace(',', '.',$request->input('amount'));
+            $payment->title = $request->input('title');
             $payment->date=$request->input('payment-date');
             $payment->category_id=$request->input('payment-category');
             $payment->type_id=$request->input('payment-type');
@@ -85,7 +91,7 @@ class PaymentController extends Controller
             $payment->save();
               $obligation= Obligation::find($obligationId);
                 //*** Jeżeli kwota wpłaty jest taka sama jak zobowiązaniw zaktualizuj status */
-                if ($obligation->total_amount <=$request->input('amount')) {
+                if ($obligation->total_amount <= str_replace(',', '.',$request->input('amount'))) {
                     $obligation->status='2';
                     $obligation->save();
                 }
@@ -180,6 +186,7 @@ class PaymentController extends Controller
 
          return view('pages.payments.payObligation')
                  ->with('amount', $request->input('amount'))
+                 ->with('title', $request->input('title'))
                  ->with('idObligation', $request->input('obligation'))
                  ->with('paymentType',$paymentType)
                  ->with('paymentCategory', $paymentCategory);

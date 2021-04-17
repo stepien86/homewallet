@@ -39,9 +39,13 @@ class ObligationController extends Controller
         }
         else {
             $obligations= Obligation::where('status',1)->with('customer');
-        }
-            $obligations = $obligations->orderBy('id', 'desc')->get();
 
+        }
+            $obligations = $obligations->orderBy('payment_peroid', 'asc')->Paginate(5);
+            $obligations->appends([
+                'customer' => $request->input('customer'),
+                'statusPayment' => $request->input('statusPayment')
+            ]);
 
         return view('pages.obligations/index', compact('obligations'), compact('customers'));
 
@@ -100,7 +104,7 @@ class ObligationController extends Controller
         //    }
 
         //  }
-        return redirect()->route('obligations.index');
+        return redirect()->route('obligations-index');
     }
 
     /**
@@ -122,7 +126,7 @@ class ObligationController extends Controller
         $obligation->customer_id=$request->input('customer');
         $obligation->title= $request->input('title');
         $obligation->payment_peroid= $request->input('paymentPeroid');
-        $obligation->total_amount=$request->input('total_amount');
+        $obligation->total_amount=str_replace(',', '.',$request->input('total_amount'));
         $obligation->status= '1';
         $obligation->save();
         return redirect()->route('obligations-index')->with('status', 'Płatność dodana prawidłowo!');
@@ -173,7 +177,7 @@ class ObligationController extends Controller
         $obligation = Obligation::find($id);
         $obligation->title= $request->input('title');
         $obligation->payment_peroid = $request->input('paymentPeroid');
-        $obligation->total_amount = $request->input('total_amount');
+        $obligation->total_amount = str_replace(',', '.',$request->input('total_amount'));
         $obligation->save();
         return redirect()->route('obligations-index');
     }
@@ -186,6 +190,9 @@ class ObligationController extends Controller
      */
     public function destroy(Obligation $obligation)
     {
-        //
+
+        $obligation->delete();
+        return redirect()->route('obligations-index');
+
     }
 }

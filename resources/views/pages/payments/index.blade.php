@@ -17,6 +17,7 @@
                 </div>
             </div>
         @endif
+
         <div class="pb-4">
             <div class="px-3 py-3">
                 <form action="{{ route('payments') }}" method="get">
@@ -26,6 +27,10 @@
                         class="w-28 px-3 py-3 bg-blue-500 hover:bg-blue-700 text-white rounded">Sortuj</button>
                 </form>
             </div>
+        </div>
+        <div class="flex mt-4 mb-3">
+            <a href="{{ route('new-payment') }}"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Dodaj płatność</a>
         </div>
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -133,7 +138,7 @@
                     </table>
                 </div>
                 <div class="mt-2 mb-2 px-2">
-                    {{$payments->links()}}
+                    {{$payments->links() ?? ''}}
                 </div>
             </div>
         </div>

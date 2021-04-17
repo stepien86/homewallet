@@ -18,7 +18,7 @@ class CreateObligationsTable extends Migration
             $table->foreignId('customer_id');
             $table->date('payment_peroid');
             $table->string('title');
-            $table->float('total_amount');
+            $table->decimal('total_amount', 13,2 );
             $table->integer('status')->nullable();
             $table->timestamps();
         });

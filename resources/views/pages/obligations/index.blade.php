@@ -172,17 +172,26 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         @if ($paymentSum == 0)
 
-                                            {{ $paymentSum }}<a href="{{ route('obligations-edit', $obligation->id) }}"
-                                                class="text-indigo-600 hover:text-indigo-900"> Edytuj</a>
-                                            <a href="{{ route('pay-obligation', ['obligation' => $obligation->id, 'amount' => $obligation->total_amount]) }}"
-                                                class="text-indigo-600 hover:text-indigo-900">Opłać</a>
+                                            {{ $paymentSum }}
+                                            <form action="{{ route('obligations.destroy', $obligation->id) }}" method="post">
+                                            <a href="{{ route('obligations-edit', $obligation->id) }}"
+                                                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"> Edytuj</a>
+                                            <a href="{{ route('pay-obligation', ['obligation' => $obligation->id, 'amount' => $obligation->total_amount,
+                                            'title' => $obligation->title]) }}"
+                                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Opłać</a>
+                                                @method('delete')
+                                                @csrf
+                                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">usuń</button>
+                                            </form>
 
                                         @elseif ($paymentSum < $obligation->total_amount)
                                                 {{ $paymentSum }}<a
-                                                    href="{{ route('pay-obligation', ['obligation' => $obligation->id, 'amount' => $obligation->total_amount - $paymentSum]) }}"
+                                                    href="{{ route('pay-obligation', ['obligation' => $obligation->id, 'amount' => $obligation->total_amount - $paymentSum,
+                                                    ]) }}"
                                                     class="text-indigo-600 hover:text-indigo-900">Opłać resztę</a>
                                                 <a href="{{ route('obligations.show', $obligation->id) }}"
-                                                    class="text-indigo-600 hover:text-indigo-900">szczegóły</a>
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">szczegóły</a>
+
 
                                             @elseif ($paymentSum > $obligation->total_amount)
                                                 <div class="p-2">
@@ -191,12 +200,12 @@
                                                         NADPŁATA
                                                 </div>
                                                 <div><a href="{{ route('obligations.show', $obligation->id) }}"
-                                                        class="text-indigo-600 hover:text-indigo-900">szczegóły</a></div>
+                                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">szczegóły</a></div>
 
                                             @else ($sum == $obligation->total_amount)
 
                                                 <a href="{{ route('obligations.show', $obligation->id) }}"
-                                                    class="text-indigo-600 hover:text-indigo-900">szczegóły</a>
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">szczegóły</a>
                                         @endif
 
                                         @php
@@ -205,8 +214,10 @@
                                     </td>
                                 </tr>
                             @endforeach
+
                             <!-- More items... -->
                         </tbody>
+
                         <thead class="">
                             @if (request('statusPayment') == '2')
                                 <tr>
@@ -229,6 +240,7 @@
 
                     </table>
                 </div>
+                {{$obligations->links()}}
             </div>
         </div>
     </div>

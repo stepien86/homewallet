@@ -17,8 +17,9 @@ class CreateCustomersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('title');
-            $table->char('account', 30);
-            $table->float('default_amount');
+            $table->string('account', 34);
+            $table->decimal('default_amount', 13, 2);
+           // $table->float('default_amount');
             $table->integer('reminder')->default('1');
             $table->enum('is_active', ['0', '1'])->nullable();
             $table->timestamps();

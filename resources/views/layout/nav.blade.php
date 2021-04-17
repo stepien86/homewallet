@@ -3,9 +3,9 @@
             <li><a class="p-3" href="/">Home</a></li>
             <li><a class="p-3" href="{{route('customers.index')}}">Odbiorcy</a></li>
             <li><a class="p-3" href="{{route('payments')}}">Przelewy</a>
-            <ul class="mt-2">
+            {{-- <ul class="mt-2">
                 <li><a class="p-3" href="{{route('new-payment')}}">Nowy przelew</a></li>
-            </ul>
+            </ul> --}}
             </li>
             <li><a class="p-3" href="{{route('obligations-index')}}">Płatności</a></li>
             <li><a class="p-3" href="#">Statistic</a></li>

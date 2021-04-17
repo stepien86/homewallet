@@ -50,7 +50,7 @@ class CustomerController extends Controller
             $newCustomer->name= $request->input('name');
             $newCustomer->title= $request->input('title');
             $newCustomer->account=$request->input('account');
-            $newCustomer->default_amount = $request->input('defaultAmount');
+            $newCustomer->default_amount = str_replace(',', '.', $request->input('defaultAmount'));
             if($request->has('isActive')){
                 $newCustomer->is_active = '1';
             }else{
@@ -114,7 +114,7 @@ class CustomerController extends Controller
             'name' => $request->input('name'),
             'title' => $request->input('title'),
             'account' => $request->input('account'),
-            'default_amount' => $request->input('default-amount'),
+            'default_amount' => str_replace(',', '.',$request->input('default-amount')),
 
         ]);
         if($request->has('isActive')){
@@ -148,6 +148,8 @@ class CustomerController extends Controller
         $customer->delete();
         return redirect()->route('customers.index');
     }
+
+
     public function customerPayments(Request $request, $id){
 
      $obligations = Customer::find($id)->obligations()->with('payments')->get();

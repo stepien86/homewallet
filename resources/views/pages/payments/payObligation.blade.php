@@ -22,6 +22,19 @@
               Kwota
             </label>
             <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="amount" type="text" placeholder="{{$amount}}" name="amount">
+            @error('amount')
+                <p class="text-red-500 text-xs italic">Wpisz kwotę przelewu!</p>
+            @enderror</td>
+        </div>
+        <div class="mx-3 md:flex mb-2">
+            <div class="md:w-96 px-3 mb-6 md:mb-0">
+              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="title">
+                Tytuł płatności
+              </label>
+              <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="title" type="text" value="{{$title}}" name="title">
+              @error('title')
+                  <p class="text-red-500 text-xs italic">Wpisz tytuł przelewu!</p>
+              @enderror</td>
           </div>
           <div class="-mx-3 md:flex mb-2">
             <input type="hidden" name="obligation-id" value="{{$idObligation}}">
@@ -60,7 +73,10 @@
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-zip">
               Data płatnosci
             </label>
-            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-zip" type="date" name="payment-date">
+            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-zip" type="date" name="payment-date" value="{{old('payment-date')}}">
+            @error('payment-date')
+            <p class="text-red-500 text-xs italic">Uzupełnij datę!</p>
+        @enderror</td>
           </div>
         </div>
         <div class="md:w-48 px-3 flex-none">

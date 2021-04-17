@@ -21,7 +21,7 @@
             @endif
         </div>
         <div class="p-6">
-            <table class="rounded-t-lg m-5 w-5/6 mx-auto bg-white text-gray-800 shadow-md text-sm">
+            <table class="rounded-t-lg m-5 w-max mx-auto bg-white text-gray-800 shadow-md text-sm">
                 <tr class="text-center border-b-2 border-gray-300">
                     <th class="px-4 py-3">Nazwa</th>
                     <th class="px-4 py-3">Tytuł</th>
@@ -76,5 +76,6 @@
 
             </table>
         </div>
+        {{$customers->links()}}
 
 @endsection
